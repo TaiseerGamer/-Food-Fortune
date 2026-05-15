@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Fortune — Clicker Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>🍀 Food Fortune</h1>
+  <p>Click the coin — open boxes — collect rare foods!</p>
+</header>
+
+<div class="money-bar">
+  <span class="coin-icon">🪙</span>
+  <span id="money-display">0</span>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-chip">Clicks: <span id="stat-clicks">0</span></div>
+  <div class="stat-chip">Boxes opened: <span id="stat-boxes">0</span></div>
+  <div class="stat-chip">Foods found: <span id="stat-foods">0</span></div>
+</div>
+
+<div class="main-layout">
+  <div class="left-panel">
+
+    <div class="coin-wrap">
+      <button class="coin-btn" id="coin-btn" aria-label="Click to earn coins">🪙</button>
+      <span class="coin-label">Click to earn coins!</span>
+    </div>
+
+    <div class="boxes-section">
+      <h2>🎁 MYSTERY BOXES</h2>
+      <div class="boxes-grid" id="boxes-grid"></div>
+    </div>
+
+  </div>
+
+  <div class="right-panel">
+    <h2>📖 COLLECTION</h2>
+    <div class="collection-list" id="collection-list">
+      <p class="empty-msg">Open boxes to discover foods!</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <span class="modal-food-icon" id="modal-icon">🍕</span>
+    <div class="modal-rarity-label" id="modal-rarity"></div>
+    <div class="modal-food-name" id="modal-name"></div>
+    <div class="modal-desc" id="modal-desc"></div>
+    <button class="modal-close" id="modal-close">Nice! Keep going ✨</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
