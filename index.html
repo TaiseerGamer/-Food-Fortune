@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Food Fortune — Clicker Game</title>
+<title>Food Fortune v0.1.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -13,17 +13,30 @@
 <header>
   <h1>🍀 Food Fortune</h1>
   <p>Click the coin — open boxes — collect rare foods!</p>
+  <span class="version-badge">v0.1.0</span>
 </header>
+
+<!-- Daily Login Banner -->
+<div class="daily-banner" id="daily-banner" style="display:none">
+  <span class="daily-icon">🎉</span>
+  <div class="daily-text">
+    <strong id="daily-title">Daily Bonus!</strong>
+    <span id="daily-sub">You earned a login reward!</span>
+  </div>
+  <button class="daily-claim-btn" id="daily-claim-btn">Claim!</button>
+</div>
 
 <div class="money-bar">
   <span class="coin-icon">🪙</span>
   <span id="money-display">0</span>
+  <span class="cps-badge" id="cps-badge" style="display:none">+<span id="cps-val">0</span>/s</span>
 </div>
 
 <div class="stats-bar">
   <div class="stat-chip">Clicks: <span id="stat-clicks">0</span></div>
-  <div class="stat-chip">Boxes opened: <span id="stat-boxes">0</span></div>
-  <div class="stat-chip">Foods found: <span id="stat-foods">0</span></div>
+  <div class="stat-chip">Boxes: <span id="stat-boxes">0</span></div>
+  <div class="stat-chip">Foods: <span id="stat-foods">0</span></div>
+  <div class="stat-chip">Streak: <span id="stat-streak">0</span> 🔥</div>
 </div>
 
 <div class="main-layout">
@@ -34,22 +47,38 @@
       <span class="coin-label">Click to earn coins!</span>
     </div>
 
-    <div class="boxes-section">
-      <h2>🎁 MYSTERY BOXES</h2>
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="boxes">🎁 Boxes</button>
+      <button class="tab-btn" data-tab="upgrades">⚡ Upgrades</button>
+      <button class="tab-btn" data-tab="achievements">🏆 Goals</button>
+    </div>
+
+    <div class="tab-content active" id="tab-boxes">
       <div class="boxes-grid" id="boxes-grid"></div>
+    </div>
+
+    <div class="tab-content" id="tab-upgrades">
+      <div class="upgrades-grid" id="upgrades-grid"></div>
+    </div>
+
+    <div class="tab-content" id="tab-achievements">
+      <div class="achievements-list" id="achievements-list"></div>
     </div>
 
   </div>
 
   <div class="right-panel">
     <h2>📖 COLLECTION</h2>
+    <div class="coll-controls">
+      <button class="sell-all-btn" id="sell-all-btn">💰 Sell Dupes</button>
+    </div>
     <div class="collection-list" id="collection-list">
       <p class="empty-msg">Open boxes to discover foods!</p>
     </div>
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Result Modal -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <span class="modal-food-icon" id="modal-icon">🍕</span>
@@ -57,6 +86,15 @@
     <div class="modal-food-name" id="modal-name"></div>
     <div class="modal-desc" id="modal-desc"></div>
     <button class="modal-close" id="modal-close">Nice! Keep going ✨</button>
+  </div>
+</div>
+
+<!-- Achievement Toast -->
+<div class="achievement-toast" id="achievement-toast">
+  <span class="toast-icon" id="toast-icon">🏆</span>
+  <div class="toast-text">
+    <div class="toast-label">Achievement Unlocked!</div>
+    <div class="toast-name" id="toast-name"></div>
   </div>
 </div>
 

@@ -30,10 +30,12 @@ body {
   overflow-x: hidden;
 }
 
+/* ── HEADER ── */
 header {
   width: 100%;
   text-align: center;
-  padding: 1.5rem 1rem 0.5rem;
+  padding: 1.5rem 1rem 0.4rem;
+  position: relative;
 }
 
 header h1 {
@@ -47,9 +49,73 @@ header h1 {
 header p {
   color: var(--muted);
   font-size: 0.9rem;
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
 }
 
+.version-badge {
+  display: inline-block;
+  margin-top: 0.3rem;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 50px;
+  letter-spacing: 1px;
+}
+
+/* ── DAILY BANNER ── */
+.daily-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #2a1f55, #1a3060);
+  border: 1px solid rgba(245,200,66,0.3);
+  border-radius: 16px;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem auto 0;
+  max-width: 500px;
+  width: calc(100% - 2rem);
+  box-shadow: 0 0 20px rgba(245,200,66,0.1);
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.daily-icon { font-size: 1.8rem; }
+
+.daily-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.daily-text strong { color: var(--gold); font-size: 0.95rem; }
+.daily-text span   { color: var(--muted); font-size: 0.8rem; }
+
+.daily-claim-btn {
+  padding: 0.45rem 1.1rem;
+  border-radius: 50px;
+  border: none;
+  background: var(--gold);
+  color: #1a0f00;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.1s;
+  white-space: nowrap;
+}
+
+.daily-claim-btn:active { transform: scale(0.95); }
+.daily-claim-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── MONEY BAR ── */
 .money-bar {
   display: flex;
   align-items: center;
@@ -59,7 +125,7 @@ header p {
   border: 1px solid var(--border);
   border-radius: 50px;
   padding: 0.5rem 1.5rem;
-  margin: 1rem auto;
+  margin: 0.75rem auto;
   font-size: 1.4rem;
   font-weight: 800;
   color: var(--gold);
@@ -69,6 +135,38 @@ header p {
 
 .money-bar .coin-icon { font-size: 1.5rem; }
 
+.cps-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--uncommon);
+  background: rgba(93,222,120,0.12);
+  border: 1px solid rgba(93,222,120,0.25);
+  border-radius: 50px;
+  padding: 2px 10px;
+}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.stat-chip {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 0.28rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.stat-chip span { color: var(--text); }
+
+/* ── MAIN LAYOUT ── */
 .main-layout {
   display: grid;
   grid-template-columns: 1fr 280px;
@@ -82,24 +180,23 @@ header p {
   .main-layout { grid-template-columns: 1fr; }
 }
 
-.left-panel { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.left-panel { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
 
-/* COIN */
+/* ── COIN ── */
 .coin-wrap {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .coin-btn {
-  width: 160px; height: 160px;
+  width: 150px; height: 150px;
   border-radius: 50%;
   border: none;
   background: radial-gradient(circle at 35% 30%, #ffe87a, #d4a012 60%, #8a6200);
   cursor: pointer;
-  font-size: 5rem;
+  font-size: 4.8rem;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 6px 0 #8a6200, 0 0 30px rgba(245,200,66,0.3);
   transition: transform 0.07s, box-shadow 0.07s;
@@ -121,13 +218,9 @@ header p {
   background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.3), transparent 60%);
 }
 
-.coin-label {
-  color: var(--muted);
-  font-size: 0.85rem;
-  font-weight: 600;
-}
+.coin-label { color: var(--muted); font-size: 0.82rem; font-weight: 600; }
 
-/* Floating +1 */
+/* ── FLOATING +N ── */
 .floater {
   position: fixed;
   pointer-events: none;
@@ -144,74 +237,210 @@ header p {
   100% { opacity: 0; transform: translateY(-70px) scale(1.3); }
 }
 
-/* BOXES */
-.boxes-section { width: 100%; }
-
-.boxes-section h2 {
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.3rem;
-  color: var(--muted);
-  text-align: center;
-  margin-bottom: 0.75rem;
-  letter-spacing: 1px;
+/* ── TAB BAR ── */
+.tab-bar {
+  display: flex;
+  gap: 0.4rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 4px;
+  width: 100%;
 }
 
+.tab-btn {
+  flex: 1;
+  padding: 0.4rem 0.5rem;
+  border-radius: 50px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.tab-btn.active {
+  background: var(--panel2);
+  color: var(--text);
+}
+
+.tab-btn:hover:not(.active) { color: var(--text); }
+
+.tab-content { display: none; width: 100%; }
+.tab-content.active { display: block; }
+
+/* ── BOXES ── */
 .boxes-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .box-card {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 1rem 0.5rem;
+  border-radius: 14px;
+  padding: 0.85rem 0.4rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   transition: transform 0.15s, border-color 0.15s;
 }
 
 .box-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.2); }
 
-.box-icon { font-size: 2.8rem; }
-
-.box-name {
-  font-family: 'Fredoka One', cursive;
-  font-size: 1rem;
-  color: var(--text);
-}
-
-.box-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.3; min-height: 2.2em; }
-
-.box-price {
-  display: flex; align-items: center; gap: 4px;
-  font-weight: 800; font-size: 1rem; color: var(--gold);
-}
+.box-icon { font-size: 2.5rem; }
+.box-name { font-family: 'Fredoka One', cursive; font-size: 0.9rem; color: var(--text); }
+.box-desc { font-size: 0.68rem; color: var(--muted); line-height: 1.3; min-height: 2.2em; }
+.box-price { display: flex; align-items: center; gap: 3px; font-weight: 800; font-size: 0.9rem; color: var(--gold); }
 
 .box-btn {
-  margin-top: 0.3rem;
-  padding: 0.45rem 1rem;
+  margin-top: 0.25rem;
+  padding: 0.4rem 0.85rem;
   border-radius: 50px;
   border: none;
   font-family: 'Nunito', sans-serif;
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: transform 0.1s, opacity 0.15s;
 }
 
 .box-btn:active { transform: scale(0.94); }
 .box-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
-
 .box-btn.b0 { background: #e8e8e8; color: #333; }
 .box-btn.b1 { background: #5aaeff; color: #001830; }
 .box-btn.b2 { background: var(--legendary); color: #2a1500; }
 
-/* RIGHT PANEL — collection */
+/* ── UPGRADES ── */
+.upgrades-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.upgrade-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: border-color 0.15s;
+}
+
+.upgrade-card:hover { border-color: rgba(255,255,255,0.18); }
+.upgrade-card.maxed { opacity: 0.55; }
+
+.upgrade-icon { font-size: 2rem; flex-shrink: 0; }
+
+.upgrade-info { flex: 1; min-width: 0; }
+.upgrade-name { font-family: 'Fredoka One', cursive; font-size: 0.95rem; color: var(--text); }
+.upgrade-desc { font-size: 0.7rem; color: var(--muted); margin-top: 1px; }
+
+.upgrade-level {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--uncommon);
+  background: rgba(93,222,120,0.1);
+  border: 1px solid rgba(93,222,120,0.2);
+  border-radius: 50px;
+  padding: 1px 7px;
+  margin-top: 3px;
+  display: inline-block;
+}
+
+.upgrade-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.upgrade-price { font-size: 0.8rem; font-weight: 800; color: var(--gold); }
+
+.upgrade-btn {
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  border: none;
+  background: var(--panel2);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.upgrade-btn:hover:not(:disabled) { background: #3d2e70; }
+.upgrade-btn:active { transform: scale(0.94); }
+.upgrade-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.upgrade-btn.maxed-btn { background: rgba(245,200,66,0.12); color: var(--gold); cursor: default; }
+
+/* ── ACHIEVEMENTS ── */
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ach-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.7rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  transition: border-color 0.2s;
+}
+
+.ach-card.unlocked {
+  border-color: rgba(245,200,66,0.35);
+  background: linear-gradient(135deg, #2a1f55, #241a40);
+}
+
+.ach-icon { font-size: 1.7rem; flex-shrink: 0; }
+.ach-icon.locked { filter: grayscale(1) opacity(0.35); }
+
+.ach-info { flex: 1; }
+.ach-name { font-family: 'Fredoka One', cursive; font-size: 0.9rem; color: var(--text); }
+.ach-name.locked { color: var(--muted); }
+.ach-desc { font-size: 0.7rem; color: var(--muted); margin-top: 1px; }
+
+.ach-progress-wrap { margin-top: 5px; }
+.ach-progress-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ach-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--rare);
+  transition: width 0.4s ease;
+}
+
+.ach-progress-fill.done { background: var(--gold); }
+.ach-pct { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+
+.ach-reward {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(245,200,66,0.1);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 50px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── RIGHT PANEL ── */
 .right-panel {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -219,23 +448,42 @@ header p {
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  max-height: 560px;
+  gap: 0.6rem;
+  max-height: 600px;
 }
 
 .right-panel h2 {
   font-family: 'Fredoka One', cursive;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--muted);
   text-align: center;
   letter-spacing: 1px;
 }
 
+.coll-controls { display: flex; justify-content: center; }
+
+.sell-all-btn {
+  padding: 0.35rem 1rem;
+  border-radius: 50px;
+  border: none;
+  background: rgba(93,222,120,0.12);
+  border: 1px solid rgba(93,222,120,0.25);
+  color: var(--uncommon);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.sell-all-btn:hover { background: rgba(93,222,120,0.2); }
+.sell-all-btn:active { transform: scale(0.95); }
+
 .collection-list {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
   flex: 1;
 }
 
@@ -245,28 +493,41 @@ header p {
 .coll-item {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   background: var(--panel2);
   border-radius: 10px;
-  padding: 0.45rem 0.6rem;
-  font-size: 0.85rem;
+  padding: 0.4rem 0.55rem;
+  font-size: 0.82rem;
 }
 
-.coll-icon { font-size: 1.3rem; }
+.coll-icon { font-size: 1.25rem; }
 .coll-name { flex: 1; font-weight: 700; }
 .coll-count {
-  font-size: 0.75rem; color: var(--muted); font-weight: 600;
+  font-size: 0.72rem; color: var(--muted); font-weight: 600;
   background: rgba(255,255,255,0.06);
-  padding: 2px 7px; border-radius: 50px;
+  padding: 1px 6px; border-radius: 50px;
 }
 
-.rarity-dot {
-  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+.coll-sell-btn {
+  padding: 1px 7px;
+  border-radius: 50px;
+  border: none;
+  background: rgba(245,200,66,0.12);
+  color: var(--gold);
+  font-size: 0.65rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.1s;
+  white-space: nowrap;
 }
+
+.coll-sell-btn:hover { background: rgba(245,200,66,0.25); }
+
+.rarity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
 .empty-msg { color: var(--muted); font-size: 0.85rem; text-align: center; padding: 1rem 0; }
 
-/* RESULT MODAL */
+/* ── MODAL ── */
 .modal-overlay {
   position: fixed; inset: 0;
   background: rgba(10,5,25,0.85);
@@ -293,36 +554,67 @@ header p {
 .modal-overlay.show .modal { transform: scale(1); }
 
 .modal-food-icon { font-size: 4.5rem; margin-bottom: 0.5rem; display: block; }
+
 .modal-rarity-label {
   font-family: 'Fredoka One', cursive;
   font-size: 1.1rem;
   letter-spacing: 2px;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
 .modal-food-name {
   font-family: 'Fredoka One', cursive;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.9rem;
+  margin-bottom: 0.4rem;
 }
 
-.modal-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
+.modal-desc { color: var(--muted); font-size: 0.88rem; margin-bottom: 1.2rem; }
 
 .modal-close {
-  padding: 0.6rem 2rem;
+  padding: 0.55rem 1.8rem;
   border-radius: 50px;
   border: none;
   background: var(--gold);
   color: #1a0f00;
   font-family: 'Nunito', sans-serif;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: transform 0.1s;
 }
 
 .modal-close:active { transform: scale(0.95); }
 
+/* ── ACHIEVEMENT TOAST ── */
+.achievement-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #2a1f55, #1a3060);
+  border: 1px solid rgba(245,200,66,0.4);
+  border-radius: 16px;
+  padding: 0.75rem 1.1rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  z-index: 200;
+  max-width: 280px;
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+}
+
+.achievement-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast-icon { font-size: 1.8rem; }
+.toast-label { font-size: 0.68rem; font-weight: 700; color: var(--gold); letter-spacing: 1px; }
+.toast-name  { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--text); margin-top: 1px; }
+
+/* ── RARITY COLORS ── */
 .rarity-color-common    { color: var(--common); }
 .rarity-color-uncommon  { color: var(--uncommon); }
 .rarity-color-rare      { color: var(--rare); }
@@ -336,30 +628,11 @@ header p {
 .dot-legendary { background: var(--legendary); }
 .dot-mythic    { background: var(--mythic); }
 
-/* Shine anim on legendary/mythic */
-.shine {
-  animation: shineAnim 1.2s ease-out;
-}
+/* ── SHINE ANIMATION ── */
+.shine { animation: shineAnim 1.2s ease-out; }
+
 @keyframes shineAnim {
   0%   { text-shadow: 0 0 0px currentColor; }
   40%  { text-shadow: 0 0 40px currentColor, 0 0 80px currentColor; }
   100% { text-shadow: 0 0 0px currentColor; }
 }
-
-/* Stats bar */
-.stats-bar {
-  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-  margin-bottom: 0.25rem;
-}
-
-.stat-chip {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 0.3rem 0.85rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--muted);
-}
-
-.stat-chip span { color: var(--text); }
