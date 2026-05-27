@@ -3,17 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Food Fortune v0.1.0</title>
+<title>Food Fortune v0.1.1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- ═══ EID EVENT BANNER ═══ -->
+<div class="eid-banner" id="eid-banner">
+  <div class="eid-banner-stars">
+    <span>✨</span><span>🌙</span><span>✨</span><span>⭐</span><span>✨</span>
+  </div>
+  <div class="eid-banner-content">
+    <span class="eid-banner-icon">🐑</span>
+    <div class="eid-banner-text">
+      <strong>Eid al-Adha Event!</strong>
+      <span>Limited-time foods &amp; exclusive boxes are here!</span>
+    </div>
+    <div class="eid-currency-display">
+      <span class="eid-currency-icon">🌙</span>
+      <span id="eid-currency">0</span>
+      <span class="eid-currency-label">Mooncoins</span>
+    </div>
+  </div>
+  <div class="eid-banner-stars">
+    <span>✨</span><span>⭐</span><span>✨</span><span>🌙</span><span>✨</span>
+  </div>
+</div>
+
 <header>
   <h1>🍀 Food Fortune</h1>
   <p>Click the coin — open boxes — collect rare foods!</p>
-  <span class="version-badge">v0.1.0</span>
+  <span class="version-badge">v0.1.1</span>
 </header>
 
 <!-- Daily Login Banner -->
@@ -37,6 +59,7 @@
   <div class="stat-chip">Boxes: <span id="stat-boxes">0</span></div>
   <div class="stat-chip">Foods: <span id="stat-foods">0</span></div>
   <div class="stat-chip">Streak: <span id="stat-streak">0</span> 🔥</div>
+  <div class="stat-chip eid-chip">🌙 <span id="stat-mooncoins">0</span> MC</div>
 </div>
 
 <div class="main-layout">
@@ -49,24 +72,59 @@
 
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="boxes">🎁 Boxes</button>
+      <button class="tab-btn" data-tab="eid">🌙 Eid</button>
       <button class="tab-btn" data-tab="upgrades">⚡ Upgrades</button>
       <button class="tab-btn" data-tab="achievements">🏆 Goals</button>
     </div>
 
+    <!-- BOXES TAB -->
     <div class="tab-content active" id="tab-boxes">
       <div class="boxes-grid" id="boxes-grid"></div>
     </div>
 
+    <!-- EID TAB -->
+    <div class="tab-content" id="tab-eid">
+      <div class="eid-section">
+
+        <!-- Eid Daily Bonus -->
+        <div class="eid-daily-card" id="eid-daily-card">
+          <div class="eid-daily-top">
+            <span class="eid-daily-icon">🌙</span>
+            <div>
+              <div class="eid-daily-title">Eid Daily Blessing</div>
+              <div class="eid-daily-sub">Come back every day during the event for Mooncoins!</div>
+            </div>
+          </div>
+          <div class="eid-days-row" id="eid-days-row"></div>
+          <button class="eid-claim-day-btn" id="eid-claim-day-btn">Claim Today's Blessing 🌙</button>
+        </div>
+
+        <!-- Eid Boxes -->
+        <div class="eid-subsection-title">🎁 Eid Mystery Boxes</div>
+        <div class="eid-boxes-grid" id="eid-boxes-grid"></div>
+
+        <!-- Eid Shop hint -->
+        <div class="eid-note">
+          🐑 Eid boxes drop <strong>exclusive Eid foods</strong> only found during this event.<br>
+          Earn 🌙 Mooncoins by clicking the coin (1 MC per 10 clicks) or from daily blessings.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- UPGRADES TAB -->
     <div class="tab-content" id="tab-upgrades">
       <div class="upgrades-grid" id="upgrades-grid"></div>
     </div>
 
+    <!-- ACHIEVEMENTS TAB -->
     <div class="tab-content" id="tab-achievements">
       <div class="achievements-list" id="achievements-list"></div>
     </div>
 
   </div>
 
+  <!-- RIGHT PANEL — Collection -->
   <div class="right-panel">
     <h2>📖 COLLECTION</h2>
     <div class="coll-controls">
@@ -80,11 +138,12 @@
 
 <!-- Result Modal -->
 <div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
+  <div class="modal" id="result-modal">
     <span class="modal-food-icon" id="modal-icon">🍕</span>
     <div class="modal-rarity-label" id="modal-rarity"></div>
     <div class="modal-food-name" id="modal-name"></div>
     <div class="modal-desc" id="modal-desc"></div>
+    <div class="modal-eid-badge" id="modal-eid-badge" style="display:none">🌙 Eid Exclusive</div>
     <button class="modal-close" id="modal-close">Nice! Keep going ✨</button>
   </div>
 </div>
@@ -93,7 +152,7 @@
 <div class="achievement-toast" id="achievement-toast">
   <span class="toast-icon" id="toast-icon">🏆</span>
   <div class="toast-text">
-    <div class="toast-label">Achievement Unlocked!</div>
+    <div class="toast-label" id="toast-label">Achievement Unlocked!</div>
     <div class="toast-name" id="toast-name"></div>
   </div>
 </div>
