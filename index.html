@@ -3,23 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Food Fortune v0.1.1</title>
+<title>Food Fortune v0.1.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ═══ EID EVENT BANNER ═══ -->
+<!-- ═══ EID EVENT BANNER (ending soon) ═══ -->
 <div class="eid-banner" id="eid-banner">
-  <div class="eid-banner-stars">
-    <span>✨</span><span>🌙</span><span>✨</span><span>⭐</span><span>✨</span>
-  </div>
+  <div class="eid-banner-stars"><span>✨</span><span>🌙</span><span>✨</span><span>⭐</span><span>✨</span></div>
   <div class="eid-banner-content">
     <span class="eid-banner-icon">🐑</span>
     <div class="eid-banner-text">
-      <strong>Eid al-Adha Event!</strong>
-      <span>Limited-time foods &amp; exclusive boxes are here!</span>
+      <strong>Eid al-Adha Event</strong>
+      <span id="eid-ending-label">⚠️ The event is ending tomorrow — grab your rewards while you can!</span>
     </div>
     <div class="eid-currency-display">
       <span class="eid-currency-icon">🌙</span>
@@ -27,15 +25,19 @@
       <span class="eid-currency-label">Mooncoins</span>
     </div>
   </div>
-  <div class="eid-banner-stars">
-    <span>✨</span><span>⭐</span><span>✨</span><span>🌙</span><span>✨</span>
-  </div>
+  <div class="eid-banner-stars"><span>✨</span><span>⭐</span><span>✨</span><span>🌙</span><span>✨</span></div>
 </div>
 
 <header>
   <h1>🍀 Food Fortune</h1>
   <p>Click the coin — open boxes — collect rare foods!</p>
-  <span class="version-badge">v0.1.1</span>
+  <div class="header-row">
+    <span class="version-badge">v0.1.2</span>
+    <div class="header-actions">
+      <button class="header-btn" id="sound-btn" title="Toggle Sound">🔊</button>
+      <button class="header-btn" id="settings-btn" title="Settings">⚙️</button>
+    </div>
+  </div>
 </header>
 
 <!-- Daily Login Banner -->
@@ -48,10 +50,21 @@
   <button class="daily-claim-btn" id="daily-claim-btn">Claim!</button>
 </div>
 
+<!-- Prestige Banner (shows when eligible) -->
+<div class="prestige-banner" id="prestige-banner" style="display:none">
+  <span class="prestige-banner-icon">⭐</span>
+  <div class="prestige-banner-text">
+    <strong>Prestige Available!</strong>
+    <span>Reset your progress for a permanent <span id="prestige-mult-preview">×1.5</span> coin multiplier.</span>
+  </div>
+  <button class="prestige-banner-btn" id="prestige-banner-btn">Prestige Now</button>
+</div>
+
 <div class="money-bar">
   <span class="coin-icon">🪙</span>
   <span id="money-display">0</span>
   <span class="cps-badge" id="cps-badge" style="display:none">+<span id="cps-val">0</span>/s</span>
+  <span class="prestige-badge" id="prestige-badge" style="display:none">⭐×<span id="prestige-mult-display">1.0</span></span>
 </div>
 
 <div class="stats-bar">
@@ -60,6 +73,7 @@
   <div class="stat-chip">Foods: <span id="stat-foods">0</span></div>
   <div class="stat-chip">Streak: <span id="stat-streak">0</span> 🔥</div>
   <div class="stat-chip eid-chip">🌙 <span id="stat-mooncoins">0</span> MC</div>
+  <div class="stat-chip prestige-chip" id="prestige-chip" style="display:none">⭐ <span id="stat-prestige">0</span> Prestige</div>
 </div>
 
 <div class="main-layout">
@@ -73,6 +87,7 @@
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="boxes">🎁 Boxes</button>
       <button class="tab-btn" data-tab="eid">🌙 Eid</button>
+      <button class="tab-btn" data-tab="recipes">🍳 Recipes</button>
       <button class="tab-btn" data-tab="upgrades">⚡ Upgrades</button>
       <button class="tab-btn" data-tab="achievements">🏆 Goals</button>
     </div>
@@ -85,8 +100,13 @@
     <!-- EID TAB -->
     <div class="tab-content" id="tab-eid">
       <div class="eid-section">
-
-        <!-- Eid Daily Bonus -->
+        <div class="eid-ending-card">
+          <span class="eid-ending-icon">⏳</span>
+          <div>
+            <div class="eid-ending-title">Event Ending Tomorrow!</div>
+            <div class="eid-ending-sub">All Eid foods, boxes and achievements will be gone after the event. Collect everything you can before it's too late!</div>
+          </div>
+        </div>
         <div class="eid-daily-card" id="eid-daily-card">
           <div class="eid-daily-top">
             <span class="eid-daily-icon">🌙</span>
@@ -98,17 +118,25 @@
           <div class="eid-days-row" id="eid-days-row"></div>
           <button class="eid-claim-day-btn" id="eid-claim-day-btn">Claim Today's Blessing 🌙</button>
         </div>
-
-        <!-- Eid Boxes -->
         <div class="eid-subsection-title">🎁 Eid Mystery Boxes</div>
         <div class="eid-boxes-grid" id="eid-boxes-grid"></div>
-
-        <!-- Eid Shop hint -->
         <div class="eid-note">
           🐑 Eid boxes drop <strong>exclusive Eid foods</strong> only found during this event.<br>
           Earn 🌙 Mooncoins by clicking the coin (1 MC per 10 clicks) or from daily blessings.
         </div>
+      </div>
+    </div>
 
+    <!-- RECIPES TAB -->
+    <div class="tab-content" id="tab-recipes">
+      <div class="recipes-section">
+        <div class="recipes-header">
+          <div class="recipes-title-row">
+            <span class="recipes-title">🍳 Food Recipes</span>
+            <span class="recipes-sub">Combine foods from your collection to craft special dishes!</span>
+          </div>
+        </div>
+        <div class="recipes-list" id="recipes-list"></div>
       </div>
     </div>
 
@@ -124,7 +152,7 @@
 
   </div>
 
-  <!-- RIGHT PANEL — Collection -->
+  <!-- RIGHT PANEL -->
   <div class="right-panel">
     <h2>📖 COLLECTION</h2>
     <div class="coll-controls">
@@ -144,7 +172,65 @@
     <div class="modal-food-name" id="modal-name"></div>
     <div class="modal-desc" id="modal-desc"></div>
     <div class="modal-eid-badge" id="modal-eid-badge" style="display:none">🌙 Eid Exclusive</div>
+    <div class="modal-crafted-badge" id="modal-crafted-badge" style="display:none">🍳 Crafted Dish</div>
     <button class="modal-close" id="modal-close">Nice! Keep going ✨</button>
+  </div>
+</div>
+
+<!-- Prestige Modal -->
+<div class="modal-overlay" id="prestige-overlay">
+  <div class="modal prestige-modal">
+    <span class="modal-food-icon">⭐</span>
+    <div class="prestige-modal-title">Ready to Prestige?</div>
+    <div class="prestige-modal-desc">
+      Your progress will be <strong>reset</strong> — coins, boxes, collection, upgrades.<br><br>
+      In return you'll earn a <strong>permanent coin multiplier</strong> that stacks every prestige!
+    </div>
+    <div class="prestige-rewards-preview" id="prestige-rewards-preview"></div>
+    <div class="prestige-modal-btns">
+      <button class="prestige-confirm-btn" id="prestige-confirm-btn">⭐ Prestige!</button>
+      <button class="prestige-cancel-btn" id="prestige-cancel-btn">Not yet</button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="settings-overlay">
+  <div class="modal settings-modal">
+    <div class="settings-title">⚙️ Settings</div>
+
+    <div class="settings-section">
+      <div class="settings-label">🔊 Sound Effects</div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="sound-toggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-label">✨ Floater Animations</div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="floater-toggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-label">🌙 Show Eid Event Banner</div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="eid-banner-toggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="settings-divider"></div>
+
+    <div class="settings-danger-zone">
+      <div class="settings-danger-title">⚠️ Danger Zone</div>
+      <button class="settings-reset-btn" id="settings-reset-btn">🗑️ Reset All Save Data</button>
+    </div>
+
+    <button class="settings-close-btn" id="settings-close-btn">Close</button>
   </div>
 </div>
 
