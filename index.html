@@ -3,21 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Food Fortune v0.1.3</title>
+<title>Food Fortune v0.2.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- ═══ SUMMER EVENT BANNER ═══ -->
+<div class="summer-banner" id="summer-banner">
+  <div class="summer-banner-waves"></div>
+  <div class="summer-banner-content">
+    <div class="summer-banner-icons">☀️🌊🍦🏖️🌺</div>
+    <div class="summer-banner-text">
+      <strong>☀️ Summer Splash Event!</strong>
+      <span>Limited-time foods &amp; boxes — <span id="summer-days-left">14</span> days remaining!</span>
+    </div>
+    <div class="summer-currency-display">
+      <span>🌊</span>
+      <span id="summer-currency">0</span>
+      <span class="summer-currency-label">Waves</span>
+    </div>
+  </div>
+</div>
+
 <header>
   <h1>🍀 Food Fortune</h1>
   <p>Click the coin — open boxes — collect rare foods!</p>
   <div class="header-row">
-    <span class="version-badge">v0.1.3</span>
-    <span class="patch-badge">PATCH</span>
+    <span class="version-badge">v0.2.0</span>
+    <span class="summer-badge">☀️ SUMMER</span>
     <div class="header-actions">
       <button class="header-btn" id="sound-btn" title="Toggle Sound">🔊</button>
+      <button class="header-btn" id="stats-btn" title="Statistics">📊</button>
       <button class="header-btn" id="settings-btn" title="Settings">⚙️</button>
     </div>
   </div>
@@ -55,7 +73,8 @@
   <div class="stat-chip">Boxes: <span id="stat-boxes">0</span></div>
   <div class="stat-chip">Foods: <span id="stat-foods">0</span></div>
   <div class="stat-chip">Streak: <span id="stat-streak">0</span> 🔥</div>
-  <div class="stat-chip prestige-chip" id="prestige-chip" style="display:none">⭐ <span id="stat-prestige">0</span> Prestige</div>
+  <div class="stat-chip summer-chip">🌊 <span id="stat-waves">0</span> Waves</div>
+  <div class="stat-chip prestige-chip" id="prestige-chip" style="display:none">⭐ <span id="stat-prestige">0</span></div>
 </div>
 
 <div class="main-layout">
@@ -68,6 +87,7 @@
 
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="boxes">🎁 Boxes</button>
+      <button class="tab-btn summer-tab" data-tab="summer">☀️ Summer</button>
       <button class="tab-btn" data-tab="upgrades">⚡ Upgrades</button>
       <button class="tab-btn" data-tab="recipes">🍳 Recipes</button>
       <button class="tab-btn" data-tab="achievements">🏆 Goals</button>
@@ -76,6 +96,50 @@
     <!-- BOXES TAB -->
     <div class="tab-content active" id="tab-boxes">
       <div class="boxes-grid" id="boxes-grid"></div>
+    </div>
+
+    <!-- SUMMER TAB -->
+    <div class="tab-content" id="tab-summer">
+      <div class="summer-section">
+
+        <!-- Event Timer -->
+        <div class="summer-timer-card">
+          <div class="summer-timer-top">
+            <span class="summer-timer-icon">⏳</span>
+            <div>
+              <div class="summer-timer-title">Event ends in</div>
+              <div class="summer-timer-value" id="summer-timer-display">14d 00h 00m 00s</div>
+            </div>
+          </div>
+          <div class="summer-timer-bar-wrap">
+            <div class="summer-timer-bar" id="summer-timer-bar"></div>
+          </div>
+        </div>
+
+        <!-- Summer Daily Login -->
+        <div class="summer-daily-card">
+          <div class="summer-daily-top">
+            <span class="summer-daily-icon">🌊</span>
+            <div>
+              <div class="summer-daily-title">Summer Daily Splash</div>
+              <div class="summer-daily-sub">Log in every day during the event for Waves!</div>
+            </div>
+          </div>
+          <div class="summer-days-row" id="summer-days-row"></div>
+          <button class="summer-claim-btn" id="summer-claim-btn">Claim Today's Splash 🌊</button>
+        </div>
+
+        <!-- Summer Boxes -->
+        <div class="summer-subsection-title">🎁 Summer Boxes</div>
+        <div class="summer-boxes-grid" id="summer-boxes-grid"></div>
+
+        <!-- Info note -->
+        <div class="summer-note">
+          ☀️ Summer boxes drop <strong>exclusive summer foods</strong> only available during this 2-week event.<br>
+          Earn 🌊 Waves by clicking the coin (1 Wave per 10 clicks) or from daily splashes.
+        </div>
+
+      </div>
     </div>
 
     <!-- UPGRADES TAB -->
@@ -124,6 +188,7 @@
     <div class="modal-rarity-label" id="modal-rarity"></div>
     <div class="modal-food-name" id="modal-name"></div>
     <div class="modal-desc" id="modal-desc"></div>
+    <div class="modal-summer-badge" id="modal-summer-badge" style="display:none">☀️ Summer Exclusive</div>
     <div class="modal-crafted-badge" id="modal-crafted-badge" style="display:none">🍳 Crafted Dish</div>
     <div class="modal-sell-hint" id="modal-sell-hint"></div>
     <button class="modal-close" id="modal-close">Nice! Keep going ✨</button>
@@ -147,6 +212,15 @@
   </div>
 </div>
 
+<!-- Stats Modal -->
+<div class="modal-overlay" id="stats-overlay">
+  <div class="modal stats-modal">
+    <div class="stats-modal-title">📊 Statistics</div>
+    <div class="stats-grid" id="stats-grid"></div>
+    <button class="settings-close-btn" id="stats-close-btn">Close</button>
+  </div>
+</div>
+
 <!-- Settings Modal -->
 <div class="modal-overlay" id="settings-overlay">
   <div class="modal settings-modal">
@@ -163,11 +237,16 @@
       <div class="settings-label">🌙 Dark Mode</div>
       <label class="toggle-switch"><input type="checkbox" id="darkmode-toggle" checked><span class="toggle-slider"></span></label>
     </div>
+    <div class="settings-section">
+      <div class="settings-label">☀️ Show Summer Banner</div>
+      <label class="toggle-switch"><input type="checkbox" id="summer-banner-toggle" checked><span class="toggle-slider"></span></label>
+    </div>
     <div class="settings-divider"></div>
     <div class="settings-info">
-      <div class="settings-info-row">Version: <strong>v0.1.3</strong></div>
-      <div class="settings-info-row">Total Foods: <strong>24</strong></div>
-      <div class="settings-info-row">Total Recipes: <strong>6</strong></div>
+      <div class="settings-info-row">Version: <strong>v0.2.0</strong></div>
+      <div class="settings-info-row">Total Base Foods: <strong>30</strong></div>
+      <div class="settings-info-row">Summer Exclusive Foods: <strong>14</strong></div>
+      <div class="settings-info-row">Total Recipes: <strong>8</strong></div>
     </div>
     <div class="settings-divider"></div>
     <div class="settings-danger-zone">
