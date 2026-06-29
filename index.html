@@ -3,26 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Food Fortune v0.2.1</title>
+<title>Food Fortune v0.3.1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ═══ SUMMER EVENT BANNER ═══ -->
-<div class="summer-banner" id="summer-banner">
-  <div class="summer-banner-waves"></div>
-  <div class="summer-banner-content">
-    <div class="summer-banner-icons">☀️🌊🍦🏖️🌺</div>
-    <div class="summer-banner-text">
-      <strong>☀️ Summer Splash Event!</strong>
-      <span>Limited-time — <span id="summer-days-left">7</span> days remaining!</span>
+<!-- ═══ WORLD CUP BANNER ═══ -->
+<div class="wc-banner" id="wc-banner">
+  <div class="wc-banner-grass"></div>
+  <div class="wc-banner-content">
+    <div class="wc-banner-icons">🏆⚽🌍🎯🥅</div>
+    <div class="wc-banner-text">
+      <strong>⚽ 2026 World Cup Event!</strong>
+      <span>Limited-time — ends July 18 · <span id="wc-days-left">?</span> days remaining</span>
     </div>
-    <div class="summer-currency-display">
-      <span>🌊</span>
-      <span id="summer-currency">0</span>
-      <span class="summer-currency-label">Waves</span>
+    <div class="wc-currency-display">
+      <span>🪙</span>
+      <span id="wc-currency">0</span>
+      <span class="wc-currency-label">Stadium Coins</span>
     </div>
   </div>
 </div>
@@ -31,8 +31,8 @@
   <h1>🍀 Food Fortune</h1>
   <p>Click the coin — open boxes — collect rare foods!</p>
   <div class="header-row">
-    <span class="version-badge">v0.2.1</span>
-    <span class="summer-badge">☀️ SUMMER</span>
+    <span class="version-badge">v0.3.1</span>
+    <span class="wc-badge">⚽ WORLD CUP</span>
     <div class="header-actions">
       <button class="header-btn" id="sound-btn" title="Toggle Sound">🔊</button>
       <button class="header-btn" id="stats-btn" title="Statistics">📊</button>
@@ -59,7 +59,7 @@
   <span class="prestige-banner-icon">⭐</span>
   <div class="prestige-banner-text">
     <strong>Prestige Available!</strong>
-    <span>Reset for a permanent <span id="prestige-mult-preview">×1.5</span> coin multiplier.</span>
+    <span>Reset for a permanent <span id="prestige-mult-preview">×1.5</span> multiplier + <strong>1 Prestige Point</strong>.</span>
   </div>
   <button class="prestige-banner-btn" id="prestige-banner-btn">Prestige Now</button>
 </div>
@@ -70,6 +70,7 @@
   <span class="cps-badge" id="cps-badge" style="display:none">+<span id="cps-val">0</span>/s</span>
   <span class="combo-badge" id="combo-badge" style="display:none">🔥×<span id="combo-val">1</span></span>
   <span class="prestige-badge" id="prestige-badge" style="display:none">⭐×<span id="prestige-mult-display">1.0</span></span>
+  <span class="pp-badge" id="pp-badge" style="display:none">✨<span id="pp-display">0</span>PP</span>
 </div>
 
 <div class="stats-bar">
@@ -77,20 +78,17 @@
   <div class="stat-chip">Boxes: <span id="stat-boxes">0</span></div>
   <div class="stat-chip">Foods: <span id="stat-foods">0</span></div>
   <div class="stat-chip">Streak: <span id="stat-streak">0</span> 🔥</div>
-  <div class="stat-chip summer-chip">🌊 <span id="stat-waves">0</span> Waves</div>
-  <div class="stat-chip prestige-chip" id="prestige-chip" style="display:none">⭐ <span id="stat-prestige">0</span></div>
+  <div class="stat-chip wc-chip">⚽ <span id="stat-sc">0</span> SC</div>
+  <div class="stat-chip prestige-chip" id="prestige-chip" style="display:none">⭐<span id="stat-prestige">0</span> · ✨<span id="stat-pp">0</span>PP</div>
 </div>
 
 <div class="main-layout">
   <div class="left-panel">
 
     <div class="coin-wrap">
-      <!-- Combo meter -->
       <div class="combo-meter-wrap" id="combo-meter-wrap" style="display:none">
         <div class="combo-meter-label">🔥 COMBO <span id="combo-label-val">×1</span></div>
-        <div class="combo-meter-bar-bg">
-          <div class="combo-meter-bar" id="combo-meter-bar"></div>
-        </div>
+        <div class="combo-meter-bar-bg"><div class="combo-meter-bar" id="combo-meter-bar"></div></div>
         <div class="combo-meter-sub">Keep clicking to grow the multiplier!</div>
       </div>
       <button class="coin-btn" id="coin-btn" aria-label="Click to earn coins">🪙</button>
@@ -99,10 +97,12 @@
 
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="boxes">🎁 Boxes</button>
-      <button class="tab-btn summer-tab" data-tab="summer">☀️ Summer</button>
+      <button class="tab-btn wc-tab" data-tab="worldcup">⚽ World Cup</button>
+      <button class="tab-btn" data-tab="prestige-shop">✨ P.Shop</button>
       <button class="tab-btn" data-tab="lucky">🍀 Lucky</button>
       <button class="tab-btn" data-tab="upgrades">⚡ Upgrades</button>
       <button class="tab-btn" data-tab="recipes">🍳 Recipes</button>
+      <button class="tab-btn" data-tab="trophies">🏅 Trophies</button>
       <button class="tab-btn" data-tab="achievements">🏆 Goals</button>
     </div>
 
@@ -111,44 +111,71 @@
       <div class="boxes-grid" id="boxes-grid"></div>
     </div>
 
-    <!-- SUMMER TAB -->
-    <div class="tab-content" id="tab-summer">
-      <div class="summer-section">
-        <div class="summer-timer-card">
-          <div class="summer-timer-top">
-            <span class="summer-timer-icon">⏳</span>
+    <!-- WORLD CUP TAB -->
+    <div class="tab-content" id="tab-worldcup">
+      <div class="wc-section">
+
+        <!-- Timer -->
+        <div class="wc-timer-card">
+          <div class="wc-timer-top">
+            <span class="wc-timer-icon">⏳</span>
             <div>
-              <div class="summer-timer-title">Event ends in</div>
-              <div class="summer-timer-value" id="summer-timer-display">21d 00h 00m 00s</div>
+              <div class="wc-timer-title">Event ends July 18, 2026</div>
+              <div class="wc-timer-value" id="wc-timer-display">Loading…</div>
             </div>
-            <div class="summer-extended-badge">+7 DAYS EXTENDED!</div>
+            <div class="wc-trophy-icon">🏆</div>
           </div>
-          <div class="summer-timer-bar-wrap">
-            <div class="summer-timer-bar" id="summer-timer-bar"></div>
-          </div>
+          <div class="wc-timer-bar-wrap"><div class="wc-timer-bar" id="wc-timer-bar"></div></div>
         </div>
-        <div class="summer-daily-card">
-          <div class="summer-daily-top">
-            <span class="summer-daily-icon">🌊</span>
+
+        <!-- Country Daily Login -->
+        <div class="wc-daily-card">
+          <div class="wc-daily-top">
+            <span class="wc-daily-icon">🌍</span>
             <div>
-              <div class="summer-daily-title">Summer Daily Splash</div>
-              <div class="summer-daily-sub">14 days of rewards — now extended to 21!</div>
+              <div class="wc-daily-title">Country Daily Reward</div>
+              <div class="wc-daily-sub">Each day features a different country's cuisine theme — claim your Stadium Coins!</div>
             </div>
           </div>
-          <div class="summer-days-row" id="summer-days-row"></div>
-          <button class="summer-claim-btn" id="summer-claim-btn">Claim Today's Splash 🌊</button>
+          <div class="wc-days-row" id="wc-days-row"></div>
+          <button class="wc-claim-btn" id="wc-claim-btn">Claim Today's Reward ⚽</button>
         </div>
-        <div class="summer-subsection-title">🎁 Summer Boxes</div>
-        <div class="summer-boxes-grid" id="summer-boxes-grid"></div>
-        <div class="summer-note">
-          ☀️ Summer boxes drop <strong>exclusive summer foods</strong> only available during this event.<br>
-          Earn 🌊 Waves by clicking (1 per 10 clicks) or from daily splashes.<br>
-          <strong>New in v0.2.1:</strong> 6 extra summer foods + the new <strong>Tidal Wave Chest</strong>!
+
+        <!-- Match Predict -->
+        <div class="wc-subsection-title">🎯 Match Predict</div>
+        <div class="wc-predict-card" id="wc-predict-card">
+          <div class="wc-predict-header">
+            <div class="wc-predict-title">Predict the match winner for bonus Stadium Coins!</div>
+            <div class="wc-predict-sub">One free prediction per day. New match every 24h.</div>
+          </div>
+          <div class="wc-match-display" id="wc-match-display"></div>
+          <div class="wc-predict-result" id="wc-predict-result" style="display:none"></div>
+        </div>
+
+        <!-- WC Boxes -->
+        <div class="wc-subsection-title">🎁 World Cup Boxes</div>
+        <div class="wc-boxes-grid" id="wc-boxes-grid"></div>
+
+        <div class="wc-note">
+          ⚽ World Cup boxes drop <strong>exclusive stadium foods</strong> only available until July 18.<br>
+          Earn 🪙 Stadium Coins by clicking (1 SC per 10 clicks) or from daily country rewards and match predictions!
         </div>
       </div>
     </div>
 
-    <!-- LUCKY UPGRADES TAB -->
+    <!-- PRESTIGE SHOP TAB -->
+    <div class="tab-content" id="tab-prestige-shop">
+      <div class="pshop-section">
+        <div class="pshop-header">
+          <div class="pshop-title">✨ Prestige Shop</div>
+          <div class="pshop-balance">Balance: <strong id="pshop-pp-display">0</strong> ✨ Prestige Points</div>
+          <div class="pshop-sub">Earn 1 PP per Prestige. Spend on permanent perks that survive every reset!</div>
+        </div>
+        <div class="pshop-grid" id="pshop-grid"></div>
+      </div>
+    </div>
+
+    <!-- LUCKY TAB -->
     <div class="tab-content" id="tab-lucky">
       <div class="lucky-section">
         <div class="lucky-header">
@@ -175,6 +202,17 @@
       </div>
     </div>
 
+    <!-- TROPHIES TAB -->
+    <div class="tab-content" id="tab-trophies">
+      <div class="trophies-section">
+        <div class="trophies-header">
+          <div class="trophies-title">🏅 Trophy Wall</div>
+          <div class="trophies-sub"><span id="trophy-count">0</span> / <span id="trophy-total">0</span> trophies earned.</div>
+        </div>
+        <div class="trophies-grid" id="trophies-grid"></div>
+      </div>
+    </div>
+
     <!-- ACHIEVEMENTS TAB -->
     <div class="tab-content" id="tab-achievements">
       <div class="ach-filter-bar" id="ach-filter-bar"></div>
@@ -188,6 +226,11 @@
     <h2>📖 COLLECTION</h2>
     <div class="coll-controls">
       <button class="sell-all-btn" id="sell-all-btn">💰 Sell Dupes</button>
+      <button class="auto-sell-toggle-btn" id="auto-sell-toggle-btn">🔄 Auto-Sell: OFF</button>
+    </div>
+    <div class="auto-sell-panel" id="auto-sell-panel" style="display:none">
+      <div class="auto-sell-label">Auto-sell duplicates above:</div>
+      <div class="auto-sell-options" id="auto-sell-options"></div>
     </div>
     <div class="coll-search-wrap">
       <input class="coll-search" id="coll-search" type="text" placeholder="🔍 Search foods…">
@@ -205,7 +248,8 @@
     <div class="modal-rarity-label" id="modal-rarity"></div>
     <div class="modal-food-name" id="modal-name"></div>
     <div class="modal-desc" id="modal-desc"></div>
-    <div class="modal-summer-badge" id="modal-summer-badge" style="display:none">☀️ Summer Exclusive</div>
+    <div class="modal-wc-badge" id="modal-wc-badge" style="display:none">⚽ World Cup Exclusive</div>
+    <div class="modal-celestial-badge" id="modal-celestial-badge" style="display:none">🌌 CELESTIAL</div>
     <div class="modal-crafted-badge" id="modal-crafted-badge" style="display:none">🍳 Crafted Dish</div>
     <div class="modal-sell-hint" id="modal-sell-hint"></div>
     <button class="modal-close" id="modal-close">Nice! Keep going ✨</button>
@@ -217,10 +261,7 @@
   <div class="modal prestige-modal">
     <span class="modal-food-icon">⭐</span>
     <div class="prestige-modal-title">Ready to Prestige?</div>
-    <div class="prestige-modal-desc">
-      Your progress will be <strong>reset</strong> — coins, boxes, collection, upgrades &amp; crafts.<br><br>
-      In return you earn a <strong>permanent coin multiplier</strong> that stacks every prestige!
-    </div>
+    <div class="prestige-modal-desc">Your progress will be <strong>reset</strong> — coins, boxes, collection, upgrades &amp; crafts.<br><br>You'll earn a <strong>permanent coin multiplier</strong> + <strong>1 Prestige Point</strong>!</div>
     <div class="prestige-rewards-preview" id="prestige-rewards-preview"></div>
     <div class="prestige-modal-btns">
       <button class="prestige-confirm-btn" id="prestige-confirm-btn">⭐ Prestige!</button>
@@ -242,32 +283,17 @@
 <div class="modal-overlay" id="settings-overlay">
   <div class="modal settings-modal">
     <div class="settings-title">⚙️ Settings</div>
-    <div class="settings-section">
-      <div class="settings-label">🔊 Sound Effects</div>
-      <label class="toggle-switch"><input type="checkbox" id="sound-toggle" checked><span class="toggle-slider"></span></label>
-    </div>
-    <div class="settings-section">
-      <div class="settings-label">✨ Floater Animations</div>
-      <label class="toggle-switch"><input type="checkbox" id="floater-toggle" checked><span class="toggle-slider"></span></label>
-    </div>
-    <div class="settings-section">
-      <div class="settings-label">🌙 Dark Mode</div>
-      <label class="toggle-switch"><input type="checkbox" id="darkmode-toggle" checked><span class="toggle-slider"></span></label>
-    </div>
-    <div class="settings-section">
-      <div class="settings-label">🔔 Notifications</div>
-      <label class="toggle-switch"><input type="checkbox" id="notif-toggle" checked><span class="toggle-slider"></span></label>
-    </div>
-    <div class="settings-section">
-      <div class="settings-label">☀️ Show Summer Banner</div>
-      <label class="toggle-switch"><input type="checkbox" id="summer-banner-toggle" checked><span class="toggle-slider"></span></label>
-    </div>
+    <div class="settings-section"><div class="settings-label">🔊 Sound Effects</div><label class="toggle-switch"><input type="checkbox" id="sound-toggle" checked><span class="toggle-slider"></span></label></div>
+    <div class="settings-section"><div class="settings-label">✨ Floater Animations</div><label class="toggle-switch"><input type="checkbox" id="floater-toggle" checked><span class="toggle-slider"></span></label></div>
+    <div class="settings-section"><div class="settings-label">🌙 Dark Mode</div><label class="toggle-switch"><input type="checkbox" id="darkmode-toggle" checked><span class="toggle-slider"></span></label></div>
+    <div class="settings-section"><div class="settings-label">🔔 Notifications</div><label class="toggle-switch"><input type="checkbox" id="notif-toggle" checked><span class="toggle-slider"></span></label></div>
+    <div class="settings-section"><div class="settings-label">⚽ Show World Cup Banner</div><label class="toggle-switch"><input type="checkbox" id="wc-banner-toggle" checked><span class="toggle-slider"></span></label></div>
     <div class="settings-divider"></div>
     <div class="settings-info">
-      <div class="settings-info-row">Version: <strong>v0.2.1</strong></div>
-      <div class="settings-info-row">Total Base Foods: <strong>30</strong></div>
-      <div class="settings-info-row">Summer Exclusive Foods: <strong>20</strong></div>
-      <div class="settings-info-row">Total Recipes: <strong>10</strong></div>
+      <div class="settings-info-row">Version: <strong>v0.3.1</strong></div>
+      <div class="settings-info-row">Base Foods: <strong>38</strong></div>
+      <div class="settings-info-row">WC Exclusive Foods: <strong>16</strong></div>
+      <div class="settings-info-row">Recipes: <strong>14</strong></div>
     </div>
     <div class="settings-divider"></div>
     <div class="settings-danger-zone">
